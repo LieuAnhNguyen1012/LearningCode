@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Tự học Java Web với NetBeans: mô phỏng Servlet, JDBC, MVC2, đăng nhập và CRUD theo từng dòng code."
+    />
+    <title>JavaWeb Lab — Học theo luồng</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23111929'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='monospace' font-size='34' fill='%23ff9966'%3EJ%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/main.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Đến bài học</a>
+    <aside class="sidebar" aria-label="Danh mục bài học">
+      <a class="brand" href="#servlet" aria-label="JavaWeb Lab, bài Servlet"
+        ><span class="brand-mark">J<span>{ }</span></span
+        ><span
+          >JavaWeb <b>Lab</b><small>PRJ301 · Học theo luồng</small></span
+        ></a
+      >
+      <div class="sidebar-caption">NỘI DUNG TỪ POWERPOINT</div>
+      <nav id="lesson-nav" aria-label="Chọn bài học"></nav>
+      <div class="sidebar-foot">
+        <span class="small-square"></span>12 bài học tương tác<small
+          >Servlet · JDBC · MVC2<br />NetBeans &amp; SQL Server</small
+        >
+      </div>
+    </aside>
+    <div class="app-shell">
+      <header class="topbar">
+        <span class="breadcrumb"
+          >Phòng thực hành <span>/</span>
+          <strong id="breadcrumb-title">Servlet đầu tiên</strong></span
+        ><span class="local-label">MÔ PHỎNG CÁ NHÂN</span>
+      </header>
+      <main id="main">
+        <section class="lesson-intro" aria-labelledby="lesson-title">
+          <div class="eyebrow">
+            <span id="lesson-number">BÀI 03</span
+            ><span class="source-chip" id="slide-ref">PPT · slide 22–23</span>
+          </div>
+          <h1 id="lesson-title">Servlet đầu tiên</h1>
+          <p id="lesson-summary">
+            Theo một cái tên từ form, qua Servlet, đến lời chào trong JSP.
+          </p>
+        </section>
+        <form
+          class="scenario-bar"
+          id="scenario-form"
+          aria-label="Chọn dữ liệu cho mô phỏng"
+        >
+          <div id="scenario-fields" class="scenario-fields"></div>
+          <button class="button button-dark" type="submit">
+            Áp dụng dữ liệu <span aria-hidden="true">↗</span>
+          </button>
+        </form>
+        <div id="scenario-help" class="scenario-help"></div>
+        <div class="workspace-grid">
+          <section class="flow-panel" aria-labelledby="flow-heading">
+            <div class="panel-heading">
+              <h2 id="flow-heading">Luồng xử lý</h2>
+              <span class="step-counter" id="step-counter">01 / 09</span>
+            </div>
+            <div class="flow-legend">
+              <span><i class="legend-active"></i>Đang xử lý</span
+              ><span><i class="legend-packet"></i>Dữ liệu di chuyển</span
+              ><span class="node-hint">Bấm một khối để theo đến đó</span>
+            </div>
+            <div
+              id="flow-diagram"
+              class="flow-diagram"
+              aria-label="Sơ đồ luồng xử lý"
+            ></div>
+            <div class="playback">
+              <button
+                type="button"
+                class="button button-icon"
+                id="prev-step"
+                aria-label="Bước trước"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                class="button button-accent"
+                id="play-toggle"
+              >
+                ▶ Chạy luồng
+              </button>
+              <button
+                type="button"
+                class="button button-icon"
+                id="next-step"
+                aria-label="Bước tiếp"
+              >
+                →
+              </button>
+              <button type="button" class="button button-quiet" id="reset-flow">
+                Làm lại
+              </button>
+              <label class="speed-label"
+                >Tốc độ<select id="play-speed" aria-label="Tốc độ chạy">
+                  <option value="6200">Chậm</option>
+                  <option value="4200" selected>Vừa</option>
+                  <option value="2300">Nhanh</option>
+                </select></label
+              >
+            </div>
+            <nav
+              id="step-dots"
+              class="step-dots"
+              aria-label="Chọn bước trong luồng"
+            ></nav>
+            <article
+              class="step-explanation"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <div class="step-kicker" id="step-kicker">BƯỚC 01</div>
+              <h3 id="step-title"></h3>
+              <p id="step-description"></p>
+            </article>
+            <div class="data-inspector">
+              <div class="inspector-heading">
+                <h3>Dữ liệu tại bước này</h3>
+                <span id="data-context"></span>
+              </div>
+              <dl id="data-state"></dl>
+              <div id="data-table"></div>
+            </div>
+          </section>
+          <section class="code-panel" aria-labelledby="code-heading">
+            <div class="code-heading">
+              <div>
+                <span class="window-dots" aria-hidden="true"
+                  ><i></i><i></i><i></i
+                ></span>
+                <h2 id="code-heading">Đọc code cùng lúc</h2>
+              </div>
+              <button class="copy-button" type="button" id="copy-code">
+                Sao chép
+              </button>
+            </div>
+            <div
+              id="code-tabs"
+              class="code-tabs"
+              role="tablist"
+              aria-label="Tệp mã nguồn minh họa"
+            ></div>
+            <div class="code-meta">
+              <span id="code-path"></span><span id="code-kind"></span>
+            </div>
+            <div
+              class="code-scroll"
+              id="code-scroll"
+              role="tabpanel"
+              aria-label="Nội dung mã nguồn"
+              tabindex="0"
+            >
+              <pre><code id="code-content"></code></pre>
+            </div>
+            <div class="code-footer">
+              <span class="highlight-key"></span
+              ><span id="code-focus-note"
+                >Vùng sáng tương ứng với bước đang xem</span
+              >
+            </div>
+          </section>
+        </div>
+        <section class="lesson-notes" aria-label="Giải thích và thực hành">
+          <article class="notes-section">
+            <div class="section-overline">ĐỌC HIỂU</div>
+            <h2 id="notes-title">Những điều cần nắm</h2>
+            <div id="concept-notes"></div>
+          </article>
+          <article class="notes-section netbeans-notes">
+            <div class="section-overline">TRỞ LẠI NETBEANS</div>
+            <h2>Thực hành trên project</h2>
+            <ol id="netbeans-steps"></ol>
+            <div id="lesson-caution" class="caution-note"></div>
+          </article>
+        </section>
+        <details class="source-details">
+          <summary>Đối chiếu tài liệu và phạm vi mô phỏng</summary>
+          <div id="source-detail-content"></div>
+        </details>
+        <nav class="lesson-pagination" aria-label="Chuyển bài">
+          <button class="button button-outline" id="prev-lesson" type="button">
+            ← Bài trước</button
+          ><span id="lesson-position"></span
+          ><button class="button button-dark" id="next-lesson" type="button">
+            Bài tiếp →
+          </button>
+        </nav>
+        <footer>
+          Biên soạn từ <strong>PRJ301_Tuan1_2.pptx</strong> · Mô phỏng để đọc
+          hiểu code.<br />JavaScript chạy các tình huống mẫu trong trình duyệt;
+          mã Java và SQL được hiển thị để học, không thực thi trên Tomcat hay cơ
+          sở dữ liệu thật.
+        </footer>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <noscript
+      ><p class="noscript">
+        Hãy bật JavaScript để xem các bài học tương tác.
+      </p></noscript
+    >
+  </body>
+</html>
